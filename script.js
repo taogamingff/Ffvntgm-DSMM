@@ -19,6 +19,61 @@ const LIBRARY_PAGE_SIZE = 60;
 
 const SECURE_HEADER_VALUE = "SECURE_AJAX_CLIENT_OB53";
 
+// ===== NETWORK ERROR HANDLING (Thêm mới) =====
+let lastFailedAction = null; // Lưu hành động cuối cùng để retry
+
+function showNetworkErrorModal(message = 'Please check your internet connection and try again.') {
+    document.getElementById('network-error-message').textContent = message;
+    document.getElementById('modal-network-error').classList.remove('hidden');
+    document.getElementById('modal-network-error').style.display = 'flex';
+}
+
+function closeModal(id) { 
+    document.getElementById(id).style.display = 'none'; 
+    document.getElementById(id).classList.add('hidden');
+}
+
+function retryLastAction() {
+    closeModal('modal-network-error');
+    if (lastFailedAction) {
+        const action = lastFailedAction;
+        lastFailedAction = null;
+        action(); // Gọi lại hành động đã lưu
+    }
+}
+
+// Wrap fetch với xử lý lỗi mạng và lưu hành động retry
+async function fetchWithNetworkErrorHandling(url, options = {}, retryAction = null) {
+    lastFailedAction = retryAction;
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+            // Có thể là lỗi HTTP, nhưng vẫn coi là lỗi kết nối nếu là 5xx hoặc 0
+            if (response.status >= 500 || response.status === 0) {
+                throw new Error('Server error');
+            }
+        }
+        return response;
+    } catch (error) {
+        console.error('Network error:', error);
+        showNetworkErrorModal();
+        throw error;
+    }
+}
+
+// Tự động kiểm tra kết nối
+window.addEventListener('online', () => {
+    closeModal('modal-network-error');
+});
+window.addEventListener('offline', () => {
+    showNetworkErrorModal('You are offline. Please check your internet connection.');
+});
+if (!navigator.onLine) {
+    showNetworkErrorModal('You are offline. Please check your internet connection.');
+}
+
+// ===== PHẦN CÒN LẠI GIỮ NGUYÊN TỪ BẢN GỐC =====
+
 function parseItemId(item) {
     if (!item) return null;
     if (typeof item !== 'object') return String(item);
@@ -72,12 +127,12 @@ function handleFile(file) {
         "X-Sec-Header": SECURE_HEADER_VALUE
     };
 
-    const verPromise = fetch('/api/version', { method: "POST", headers: handshakeHeaders })
+    const verPromise = fetchWithNetworkErrorHandling('/api/version', { method: "POST", headers: handshakeHeaders })
         .then(res => res.json())
         .then(data => { if (data && data.version) App.version = data.version; })
         .catch(() => {});
 
-    const dbPromise = fetch('/api/itemdata', { method: "POST", headers: handshakeHeaders })
+    const dbPromise = fetchWithNetworkErrorHandling('/api/itemdata', { method: "POST", headers: handshakeHeaders })
         .then(res => res.json())
         .then(data => { App.itemDb = data || {}; })
         .catch(() => {});
@@ -265,7 +320,8 @@ async function performAuth() {
     toggleLoader(true, "Getting account login");
 
     try {
-        const res = await fetch(API_URL, {
+        // Sử dụng fetchWithNetworkErrorHandling thay cho fetch thông thường
+        const res = await fetchWithNetworkErrorHandling(API_URL, {
             method:"POST",
             headers:{ 
                 "Content-Type":"application/json",
@@ -277,7 +333,7 @@ async function performAuth() {
                 pass:targetPass,
                 version:App.version
             })
-        });
+        }, () => performAuth()); // Truyền retryAction là chính hàm này
         
         const data = await res.json();
         if(res.ok && (data.status === "success" || data.account_info)) {
@@ -315,7 +371,9 @@ async function performAuth() {
             showLoginError(data.message || "Invalid credentials.");
         }
     } catch(e) {
-        showLoginError("Network connection error.");
+        // Không cần showLoginError ở đây vì modal mạng đã hiển thị
+        // Nhưng vẫn giữ nếu muốn thông báo thêm
+        // showLoginError("Network connection error.");
     }
     toggleLoader(false);
 }
@@ -338,7 +396,7 @@ async function toDash() {
 
 async function refreshGridData() {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetchWithNetworkErrorHandling(API_URL, {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json",
@@ -350,7 +408,7 @@ async function refreshGridData() {
                 aid: App.aid,
                 version: App.version
             })
-        });
+        }, () => refreshGridData()); // Retry action
         
         if (response.ok) {
             const res = await response.json();
@@ -400,7 +458,7 @@ async function secureRequest(mode, id, retries = 3) {
         const timeoutId = setTimeout(() => controller.abort(), 12000); 
         
         try {
-            const r = await fetch(API_URL, {
+            const r = await fetchWithNetworkErrorHandling(API_URL, {
                 method: "POST",
                 headers: { 
                     "Content-Type":"application/json",
@@ -416,7 +474,8 @@ async function secureRequest(mode, id, retries = 3) {
                     pass: App.pass,
                     version: App.version
                 })
-            });
+            }, () => secureRequest(mode, id)); // Retry action
+            
             clearTimeout(timeoutId);
             const data = await r.json();
             if(data.status === "success") return true;
@@ -778,7 +837,7 @@ async function performLookup() {
     
     const searchPromises = regionsToSearch.map(async (reg) => {
         try {
-            const res = await fetch(API_URL, {
+            const res = await fetchWithNetworkErrorHandling(API_URL, {
                 method: "POST",
                 headers: { 
                     "Content-Type":"application/json",
@@ -790,7 +849,8 @@ async function performLookup() {
                     aid: searchUid,
                     version: App.version
                 })
-            });
+            }, () => performLookup()); // Retry action
+            
             const data = await res.json();
             if (data && data.wishlist_items && data.wishlist_items.length > 0) {
                 return { region: reg.toUpperCase(), items: data.wishlist_items };
@@ -904,9 +964,12 @@ function openWipeModal() {
 function openLogoutModal() { 
     document.getElementById('modal-logout').style.display = 'flex'; 
 }
+// Hàm closeModal đã được định nghĩa ở trên (phần network) để tránh trùng lặp, nên bỏ dòng dưới đây nếu có
+/*
 function closeModal(id) { 
     document.getElementById(id).style.display = 'none'; 
 }
+*/
 function updateStatus(type, msg) {
     const box = document.getElementById('status-box');
     box.className = `status-window active`;
