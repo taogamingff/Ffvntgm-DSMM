@@ -3,252 +3,817 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>DANH SÁCH MONG MUỐN</title>
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    >
+
+    <!-- GIỮ NGUYÊN style.css -->
+    <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
 
 <header class="flex justify-center items-center h-16 bg-black border-b-2 border-[#ffde00] sticky top-0">
-    <img src="/api/assets/logo.png" class="h-7" alt="Logo">
+    <img
+        src="./api/assets/logo.png"
+        class="h-7"
+        alt="Logo"
+        onerror="this.style.display='none'"
+    >
 </header>
 
 <div class="main-wrapper">
+
     <div id="view-login">
+
         <div class="text-center my-10 gff">
-            <span class="text-[64px] font-black italic block leading-[0.75]">QUẢN LÝ DANH SACH</span>
-            <span class="text-[64px] font-black italic block text-[#ffde00] leading-[0.85]">MONG MUỐN</span>
-            <p class="text-[11px] font-bold tracking-[0.25em] text-zinc-400 mt-3 uppercase">THÊM, XÓA DANH SÁC HMONG MUỐN</p>
+            <span class="text-[64px] font-black italic block leading-[0.75]">
+                QUẢN LÝ DANH SACH
+            </span>
+
+            <span class="text-[64px] font-black italic block text-[#ffde00] leading-[0.85]">
+                MONG MUỐN
+            </span>
+
+            <p class="text-[11px] font-bold tracking-[0.25em] text-zinc-400 mt-3 uppercase">
+                THÊM, XÓA DANH SÁCH MONG MUỐN
+            </p>
         </div>
+
         <div class="panel-container">
+
             <div class="flex mb-8 bg-black p-1 border border-zinc-900 rounded-full">
-                <button type="button" id="t-file" class="flex-1 py-3 text-[10px] font-black rounded-full text-white bg-zinc-800 flex items-center justify-center gap-2" onclick="switchTab('file')">
-                    <i class="fa-solid fa-file-invoice"></i> GUEST FILE
+
+                <button
+                    type="button"
+                    id="t-file"
+                    class="flex-1 py-3 text-[10px] font-black rounded-full text-white bg-zinc-800 flex items-center justify-center gap-2"
+                    onclick="switchTab('file')"
+                >
+                    <i class="fa-solid fa-file-invoice"></i>
+                    GUEST FILE
                 </button>
-                <button type="button" id="t-manual" class="flex-1 py-3 text-[10px] font-black rounded-full text-zinc-600 flex items-center justify-center gap-2" onclick="switchTab('manual')">
-                    <i class="fa-solid fa-keyboard"></i> MANUAL
+
+                <button
+                    type="button"
+                    id="t-manual"
+                    class="flex-1 py-3 text-[10px] font-black rounded-full text-zinc-600 flex items-center justify-center gap-2"
+                    onclick="switchTab('manual')"
+                >
+                    <i class="fa-solid fa-keyboard"></i>
+                    MANUAL
                 </button>
+
             </div>
-            
+
             <div id="box-file">
-                <div id="drop-zone" class="h-44 flex flex-col items-center justify-center rounded-2xl cursor-pointer bg-[#050505] border-2 border-dashed border-zinc-900 transition-all duration-200" onclick="document.getElementById('accInp').click()">
-                    <i class="fa-solid fa-folder-open text-3xl text-zinc-800 mb-3 transition-colors duration-200"></i>
-                    <p id="f-label" class="gff text-[10px] text-zinc-600 uppercase select-none text-center px-4">Select or Drag & Drop guest.dat</p>
+
+                <div
+                    id="drop-zone"
+                    class="h-44 flex flex-col items-center justify-center rounded-2xl cursor-pointer bg-[#050505] border-2 border-dashed border-zinc-900 transition-all duration-200"
+                    onclick="document.getElementById('accInp').click()"
+                >
+
+                    <i class="fa-solid fa-folder-open text-3xl text-zinc-800 mb-3"></i>
+
+                    <p
+                        id="f-label"
+                        class="gff text-[10px] text-zinc-600 uppercase select-none text-center px-4"
+                    >
+                        Select or Drag & Drop guest.dat
+                    </p>
+
                 </div>
-                <input type="file" id="accInp" class="hidden">
+
+                <input
+                    type="file"
+                    id="accInp"
+                    class="hidden"
+                >
+
             </div>
 
             <div id="box-manual" class="hidden space-y-4">
+
                 <div class="relative h-14 bg-black border border-zinc-900 rounded-xl flex items-center px-4">
+
                     <i class="fa-solid fa-user-tag text-zinc-700 mr-4"></i>
-                    <input id="in-uid" class="bg-transparent w-full text-sm gff outline-none" placeholder="Account UID">
+
+                    <input
+                        id="in-uid"
+                        class="bg-transparent w-full text-sm gff outline-none"
+                        placeholder="Account UID"
+                    >
+
                 </div>
+
                 <div class="relative h-14 bg-black border border-zinc-900 rounded-xl flex items-center px-4">
+
                     <i class="fa-solid fa-key text-zinc-700 mr-4"></i>
-                    <input id="in-pass" type="password" class="bg-transparent w-full text-sm gff outline-none" placeholder="Password">
+
+                    <input
+                        id="in-pass"
+                        type="password"
+                        class="bg-transparent w-full text-sm gff outline-none"
+                        placeholder="Password"
+                    >
+
                 </div>
+
                 <div class="flex items-center gap-2 px-1 pt-1">
-                    <input type="checkbox" id="remember-me" class="w-4 h-4 accent-[#ffde00] rounded bg-black border border-zinc-800 cursor-pointer">
-                    <label for="remember-me" class="gff text-[10px] text-zinc-500 uppercase tracking-widest cursor-pointer select-none hover:text-zinc-300 transition-colors">Remember Login</label>
+
+                    <input
+                        type="checkbox"
+                        id="remember-me"
+                        class="w-4 h-4 accent-[#ffde00] rounded bg-black border border-zinc-800 cursor-pointer"
+                    >
+
+                    <label
+                        for="remember-me"
+                        class="gff text-[10px] text-zinc-500 uppercase tracking-widest cursor-pointer"
+                    >
+                        Remember Login
+                    </label>
+
                 </div>
+
             </div>
 
-            <button type="button" onclick="performAuth()" class="btn-mechanical btn-yellow w-full h-16 mt-8 text-lg font-bold italic">
-                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M7 21L10 13H5L17 3L14 11H19L7 21Z" /></svg>
+            <button
+                type="button"
+                onclick="performAuth()"
+                class="btn-mechanical btn-yellow w-full h-16 mt-8 text-lg font-bold italic"
+            >
+
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 21L10 13H5L17 3L14 11H19L7 21Z" />
+                </svg>
+
                 LOGIN ACCOUNT
+
             </button>
+
         </div>
     </div>
+
 
     <div id="view-info" class="hidden">
+
         <div class="text-center my-10 gff">
-            <span class="text-[54px] font-black italic block text-white uppercase">Account</span>
-            <span class="text-[54px] font-black italic block text-[#ffde00] uppercase">Info</span>
+
+            <span class="text-[54px] font-black italic block text-white uppercase">
+                Account
+            </span>
+
+            <span class="text-[54px] font-black italic block text-[#ffde00] uppercase">
+                Info
+            </span>
+
         </div>
+
         <div class="panel-container space-y-4">
+
             <div class="flex justify-between p-5 bg-black rounded-xl border border-zinc-900 items-center">
-                <div class="flex items-center gap-3"><i class="fa-solid fa-signature text-zinc-700"></i><span class="text-zinc-500 text-[10px] gff">NICKNAME</span></div>
-                <span id="res-nick" class="gff text-white italic">---</span>
+
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-signature text-zinc-700"></i>
+                    <span class="text-zinc-500 text-[10px] gff">
+                        NICKNAME
+                    </span>
+                </div>
+
+                <span id="res-nick" class="gff text-white italic">
+                    ---
+                </span>
+
             </div>
+
             <div class="flex justify-between p-5 bg-black rounded-xl border border-zinc-900 items-center">
-                <div class="flex items-center gap-3"><i class="fa-solid fa-id-badge text-zinc-700"></i><span class="text-zinc-500 text-[10px] gff">UID</span></div>
-                <span id="res-uid" class="text-yellow-500 gff">---</span>
+
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-id-badge text-zinc-700"></i>
+                    <span class="text-zinc-500 text-[10px] gff">
+                        UID
+                    </span>
+                </div>
+
+                <span id="res-uid" class="text-yellow-500 gff">
+                    ---
+                </span>
+
             </div>
+
             <div class="flex justify-between p-5 bg-black rounded-xl border border-zinc-900 items-center">
-                <div class="flex items-center gap-3"><i class="fa-solid fa-earth-americas text-zinc-700"></i><span class="text-zinc-500 text-[10px] gff">REGION</span></div>
-                <span id="res-reg" class="text-white gff uppercase">---</span>
+
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-earth-americas text-zinc-700"></i>
+                    <span class="text-zinc-500 text-[10px] gff">
+                        REGION
+                    </span>
+                </div>
+
+                <span id="res-reg" class="text-white gff uppercase">
+                    ---
+                </span>
+
             </div>
-            <button type="button" onclick="toDash()" class="btn-mechanical btn-yellow w-full h-16 mt-4 font-bold text-lg italic uppercase">Confirm login <i class="fa-solid fa-angles-right"></i></button>
+
+            <button
+                type="button"
+                onclick="toDash()"
+                class="btn-mechanical btn-yellow w-full h-16 mt-4 font-bold text-lg italic uppercase"
+            >
+                Confirm login
+                <i class="fa-solid fa-angles-right"></i>
+            </button>
+
         </div>
     </div>
 
+
     <div id="view-dash" class="hidden mt-10">
+
         <div class="text-center my-6 gff">
-            <span class="text-[36px] font-black italic block leading-[0.75] text-white">WISHLIST</span>
-            <span class="text-[36px] font-black italic block text-[#ffde00] leading-[0.85]">COMMAND CENTER</span>
-            <p class="text-[9px] font-bold tracking-[0.2em] text-zinc-500 mt-2 uppercase">MANAGE • LOOKUP • ICON LIBRARY</p>
+
+            <span class="text-[36px] font-black italic block leading-[0.75] text-white">
+                WISHLIST
+            </span>
+
+            <span class="text-[36px] font-black italic block text-[#ffde00] leading-[0.85]">
+                COMMAND CENTER
+            </span>
+
+            <p class="text-[9px] font-bold tracking-[0.2em] text-zinc-500 mt-2 uppercase">
+                MANAGE • LOOKUP • ICON LIBRARY
+            </p>
+
         </div>
 
+
         <div class="panel-container">
+
             <div class="flex items-center justify-between mb-8">
+
                 <div class="flex items-center gap-4">
-                    <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800"><i class="fa-solid fa-user text-yellow-500 text-xl"></i></div>
-                    <div>
-                        <div class="gff text-xl italic text-white" id="d-nick">---</div>
-                        <div class="flex items-center gap-2 mt-1">
-                            <span class="bg-zinc-800 text-[#ffde00] border border-zinc-700 px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider" id="d-reg-badge">IND</span>
-                            <span class="gff text-[9px] text-zinc-500 uppercase tracking-wider">UID: <span id="d-uid-ghost" class="text-white">---</span></span>
-                        </div>
+
+                    <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
+                        <i class="fa-solid fa-user text-yellow-500 text-xl"></i>
                     </div>
+
+                    <div>
+
+                        <div
+                            class="gff text-xl italic text-white"
+                            id="d-nick"
+                        >
+                            ---
+                        </div>
+
+                        <div class="flex items-center gap-2 mt-1">
+
+                            <span
+                                class="bg-zinc-800 text-[#ffde00] border border-zinc-700 px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider"
+                                id="d-reg-badge"
+                            >
+                                IND
+                            </span>
+
+                            <span class="gff text-[9px] text-zinc-500 uppercase tracking-wider">
+                                UID:
+                                <span
+                                    id="d-uid-ghost"
+                                    class="text-white"
+                                >
+                                    ---
+                                </span>
+                            </span>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
+
                 <div class="flex items-center">
-                    <button type="button" id="btn-search-toggle" onclick="toggleSearchView()" class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-[#ffde00] mr-2" title="Switch to Lookup mode">
-                        <div id="icon-search-standard" class="relative w-5 h-5 flex items-center justify-center">
+
+                    <button
+                        type="button"
+                        id="btn-search-toggle"
+                        onclick="toggleSearchView()"
+                        class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-[#ffde00] mr-2"
+                    >
+
+                        <div
+                            id="icon-search-standard"
+                            class="relative w-5 h-5 flex items-center justify-center"
+                        >
                             <i class="fa-solid fa-user text-base"></i>
                             <i class="fa-solid fa-magnifying-glass text-[9px] absolute -bottom-1 -right-1 text-[#ffde00]"></i>
                         </div>
-                        <i id="icon-search-active" class="fa-solid fa-plus-minus text-base hidden"></i>
-                    </button>
-                    <button type="button" id="btn-library-toggle" onclick="toggleLibraryView()" class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-zinc-400 mr-2" title="Switch to Icon Library finder">
-                        <i id="icon-lib-standard" class="fa-solid fa-images text-base"></i>
-                        <i id="icon-lib-active" class="fa-solid fa-plus-minus text-base hidden"></i>
-                    </button>
-                    <button type="button" onclick="openLogoutModal()" class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-red-500">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Standard Mode Row with Live Autocomplete Search Dropdown -->
-            <div id="row-standard" class="relative flex gap-2 items-start">
-                <div class="flex-1 input-mechanical px-4 flex items-center relative">
-                    <input id="item-id" class="bg-transparent w-full text-sm gff outline-none text-white" placeholder="Enter ItemId(s) or Search Name..." autocomplete="off">
-                </div>
-                <button type="button" onclick="processRequest('add')" class="btn-mechanical btn-green"><i class="fa-solid fa-plus text-xl"></i></button>
-                <button type="button" onclick="processRequest('rem')" class="btn-mechanical btn-red"><i class="fa-solid fa-trash-can text-lg"></i></button>
 
-                <!-- Live Auto-Suggest Box -->
-                <div id="autocomplete-results" class="autocomplete-box hidden"></div>
+                        <i
+                            id="icon-search-active"
+                            class="fa-solid fa-plus-minus text-base hidden"
+                        ></i>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="btn-library-toggle"
+                        onclick="toggleLibraryView()"
+                        class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-zinc-400 mr-2"
+                    >
+
+                        <i
+                            id="icon-lib-standard"
+                            class="fa-solid fa-images text-base"
+                        ></i>
+
+                        <i
+                            id="icon-lib-active"
+                            class="fa-solid fa-plus-minus text-base hidden"
+                        ></i>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="openLogoutModal()"
+                        class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-red-500"
+                    >
+
+                        <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+
+                    </button>
+
+                </div>
+
             </div>
+
+
+            <div id="row-standard" class="relative flex gap-2 items-start">
+
+                <div class="flex-1 input-mechanical px-4 flex items-center relative">
+
+                    <input
+                        id="item-id"
+                        class="bg-transparent w-full text-sm gff outline-none text-white"
+                        placeholder="Enter ItemId(s) or Search Name..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+                <button
+                    type="button"
+                    onclick="processRequest('add')"
+                    class="btn-mechanical btn-green"
+                >
+                    <i class="fa-solid fa-plus text-xl"></i>
+                </button>
+
+                <button
+                    type="button"
+                    onclick="processRequest('rem')"
+                    class="btn-mechanical btn-red"
+                >
+                    <i class="fa-solid fa-trash-can text-lg"></i>
+                </button>
+
+                <div
+                    id="autocomplete-results"
+                    class="autocomplete-box hidden"
+                ></div>
+
+            </div>
+
 
             <div id="row-search" class="hidden flex gap-2 items-start">
+
                 <div class="flex-1 input-mechanical px-4 flex items-center">
-                    <input id="search-uid" class="bg-transparent w-full text-sm gff outline-none text-white" placeholder="Enter Player UID to Search">
+
+                    <input
+                        id="search-uid"
+                        class="bg-transparent w-full text-sm gff outline-none text-white"
+                        placeholder="Enter Player UID to Search"
+                    >
+
                 </div>
-                <button type="button" onclick="performLookup()" class="btn-mechanical btn-yellow" style="width: 64px; height: 64px;">
+
+                <button
+                    type="button"
+                    onclick="performLookup()"
+                    class="btn-mechanical btn-yellow"
+                    style="width:64px;height:64px;"
+                >
                     <i class="fa-solid fa-magnifying-glass text-xl"></i>
                 </button>
+
             </div>
+
 
             <div id="row-library" class="hidden flex gap-2 items-start w-full">
-                <button type="button" onclick="openLibraryModal()" class="btn-mechanical btn-yellow w-full h-[69px] text-sm font-black italic uppercase tracking-wider" style="border-radius:14px; box-shadow: 0 5px 0 #c2a900;">
-                    <i class="fa-solid fa-images text-xl mr-2 animate-pulse"></i> OPEN ICON LIBRARY
+
+                <button
+                    type="button"
+                    onclick="openLibraryModal()"
+                    class="btn-mechanical btn-yellow w-full h-[69px] text-sm font-black italic uppercase tracking-wider"
+                >
+                    <i class="fa-solid fa-images text-xl mr-2 animate-pulse"></i>
+                    OPEN ICON LIBRARY
                 </button>
+
             </div>
 
+
             <div id="status-box" class="status-window">
-                <div id="status-icon" class="w-6 h-6 flex items-center justify-center"></div>
+
+                <div
+                    id="status-icon"
+                    class="w-6 h-6 flex items-center justify-center"
+                ></div>
+
                 <div class="flex flex-col flex-1 gap-1">
-                    <span id="status-text" class="gff text-[9px] uppercase tracking-widest text-zinc-400">Ready</span>
-                    <div class="progress-bar-small"><div id="p-fill" class="progress-fill-small"></div></div>
+
+                    <span
+                        id="status-text"
+                        class="gff text-[9px] uppercase tracking-widest text-zinc-400"
+                    >
+                        Ready
+                    </span>
+
+                    <div class="progress-bar-small">
+                        <div
+                            id="p-fill"
+                            class="progress-fill-small"
+                        ></div>
+                    </div>
+
                 </div>
+
             </div>
+
+
             <div class="flex justify-between items-center mt-6">
-                <span class="gff text-[14px] text-yellow-500 italic" id="d-count">00/80</span>
-                <button type="button" onclick="openWipeModal()" class="text-[10px] text-red-600 font-bold uppercase tracking-[0.2em] gff">WIPE WISHLIST</button>
+
+                <span
+                    class="gff text-[14px] text-yellow-500 italic"
+                    id="d-count"
+                >
+                    00/80
+                </span>
+
+                <button
+                    type="button"
+                    onclick="openWipeModal()"
+                    class="text-[10px] text-red-600 font-bold uppercase tracking-[0.2em] gff"
+                >
+                    WIPE WISHLIST
+                </button>
+
             </div>
+
         </div>
+
+
         <div id="wish-grid" class="wish-grid"></div>
+
     </div>
 
     <div class="h-16"></div>
+
 </div>
 
-<div id="modal-wipe" class="modal-overlay"><div class="modal-box">
-    <h2 class="gff text-xl italic text-white mb-2">Remove All Items From Account?</h2>
-    <p class="text-zinc-500 text-[11px] uppercase tracking-widest">This action cannot be undone</p>
-    <div class="flex gap-4 mt-8">
-        <button type="button" onclick="closeModal('modal-wipe')" class="flex-1 h-14 btn-mechanical btn-gray text-[10px]">Cancel</button>
-        <button type="button" onclick="fullPurge()" class="flex-1 h-14 btn-mechanical btn-yellow text-[10px]">Clear All</button>
-    </div>
-</div></div>
 
-<div id="modal-logout" class="modal-overlay"><div class="modal-box">
-    <h2 class="gff text-xl italic text-white mb-2">Are You Sure You Want To Logout?</h2>
-    <p class="text-zinc-500 text-[11px] uppercase tracking-widest">Login again to manage your list</p>
-    <div class="flex gap-4 mt-8">
-        <button type="button" onclick="closeModal('modal-logout')" class="flex-1 h-14 btn-mechanical btn-gray text-[10px]">Cancel</button>
-        <button type="button" id="btn-logout" onclick="performLogout()" class="flex-1 h-14 btn-mechanical btn-red text-[10px]">Logout</button>
+<!-- Wipe -->
+
+<div id="modal-wipe" class="modal-overlay">
+
+    <div class="modal-box">
+
+        <h2 class="gff text-xl italic text-white mb-2">
+            Remove All Items From Account?
+        </h2>
+
+        <p class="text-zinc-500 text-[11px] uppercase tracking-widest">
+            This action cannot be undone
+        </p>
+
+        <div class="flex gap-4 mt-8">
+
+            <button
+                type="button"
+                onclick="closeModal('modal-wipe')"
+                class="flex-1 h-14 btn-mechanical btn-gray text-[10px]"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                onclick="fullPurge()"
+                class="flex-1 h-14 btn-mechanical btn-yellow text-[10px]"
+            >
+                Clear All
+            </button>
+
+        </div>
+
     </div>
-</div></div>
+
+</div>
+
+
+<!-- Logout -->
+
+<div id="modal-logout" class="modal-overlay">
+
+    <div class="modal-box">
+
+        <h2 class="gff text-xl italic text-white mb-2">
+            Are You Sure You Want To Logout?
+        </h2>
+
+        <p class="text-zinc-500 text-[11px] uppercase tracking-widest">
+            Login again to manage your list
+        </p>
+
+        <div class="flex gap-4 mt-8">
+
+            <button
+                type="button"
+                onclick="closeModal('modal-logout')"
+                class="flex-1 h-14 btn-mechanical btn-gray text-[10px]"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="btn-logout"
+                onclick="performLogout()"
+                class="flex-1 h-14 btn-mechanical btn-red text-[10px]"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Search -->
 
 <div id="modal-search-results" class="modal-overlay">
-    <div class="modal-box" style="max-width: 500px; max-height: 85vh; display: flex; flex-direction: column; padding: 24px;">
+
+    <div
+        class="modal-box"
+        style="max-width:500px;max-height:85vh;display:flex;flex-direction:column;padding:24px;"
+    >
+
         <div class="flex justify-between items-center mb-4">
-            <h3 class="gff text-lg text-white uppercase italic">Searched Wishlist</h3>
-            <button onclick="closeModal('modal-search-results')" class="text-zinc-500 hover:text-white transition">
+
+            <h3 class="gff text-lg text-white uppercase italic">
+                Searched Wishlist
+            </h3>
+
+            <button
+                type="button"
+                onclick="closeModal('modal-search-results')"
+                class="text-zinc-500 hover:text-white"
+            >
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
+
         </div>
+
+
         <div class="flex justify-between items-center bg-black p-3 rounded-xl border border-zinc-900 mb-4 text-xs font-bold">
-            <span class="text-zinc-500 uppercase">Region: <span id="modal-search-reg" class="text-yellow-500 ml-1">---</span></span>
-            <span class="text-zinc-500 uppercase">UID: <span id="modal-search-uid" class="text-white ml-1">---</span></span>
+
+            <span class="text-zinc-500 uppercase">
+                Region:
+                <span
+                    id="modal-search-reg"
+                    class="text-yellow-500 ml-1"
+                >
+                    ---
+                </span>
+            </span>
+
+            <span class="text-zinc-500 uppercase">
+                UID:
+                <span
+                    id="modal-search-uid"
+                    class="text-white ml-1"
+                >
+                    ---
+                </span>
+            </span>
+
         </div>
-        
+
+
         <div class="flex justify-between items-center mb-3">
-            <button onclick="selectAllSearchItems()" class="text-[10px] text-yellow-500 font-bold uppercase tracking-wider">Select All Available</button>
-            <button onclick="deselectAllSearchItems()" class="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Deselect All</button>
+
+            <button
+                type="button"
+                onclick="selectAllSearchItems()"
+                class="text-[10px] text-yellow-500 font-bold uppercase tracking-wider"
+            >
+                Select All Available
+            </button>
+
+            <button
+                type="button"
+                onclick="deselectAllSearchItems()"
+                class="text-[10px] text-zinc-500 font-bold uppercase tracking-wider"
+            >
+                Deselect All
+            </button>
+
         </div>
 
-        <div id="search-results-grid" class="overflow-y-auto pr-1 flex-1 mb-6 grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2" style="max-height: 40vh;"></div>
 
-        <button id="btn-import-items" onclick="importSelectedItems()" class="btn-mechanical btn-yellow w-full h-14 text-sm font-bold italic uppercase">
-            <i class="fa-solid fa-file-import mr-2"></i> Import Selected Items
+        <div
+            id="search-results-grid"
+            class="overflow-y-auto pr-1 flex-1 mb-6 grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2"
+            style="max-height:40vh;"
+        ></div>
+
+
+        <button
+            id="btn-import-items"
+            type="button"
+            onclick="importSelectedItems()"
+            class="btn-mechanical btn-yellow w-full h-14 text-sm font-bold italic uppercase"
+        >
+            <i class="fa-solid fa-file-import mr-2"></i>
+            Import Selected Items
         </button>
+
     </div>
+
 </div>
+
+
+<!-- Library -->
 
 <div id="modal-library" class="modal-overlay">
-    <div class="modal-box" style="max-width: 680px; max-height: 85vh; display: flex; flex-direction: column; padding: 24px; border-top: 4px solid var(--ff-yellow);">
+
+    <div
+        class="modal-box"
+        style="max-width:680px;max-height:85vh;display:flex;flex-direction:column;padding:24px;border-top:4px solid var(--ff-yellow);"
+    >
+
         <div class="flex justify-between items-center mb-4">
+
             <h3 class="gff text-lg text-white uppercase italic flex items-center gap-2">
-                <i class="fa-solid fa-images text-yellow-500"></i> Icon Library Finder
+                <i class="fa-solid fa-images text-yellow-500"></i>
+                Icon Library Finder
             </h3>
-            <button onclick="closeModal('modal-library')" class="text-zinc-500 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+
+            <button
+                type="button"
+                onclick="closeModal('modal-library')"
+                class="text-zinc-500 hover:text-white"
+            >
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
         </div>
-        
+
+
         <div class="relative h-12 bg-black border border-zinc-800 rounded-xl flex items-center px-4 mb-4">
+
             <i class="fa-solid fa-magnifying-glass text-zinc-500 mr-3"></i>
-            <input id="lib-search-input" oninput="filterLibraryItems()" class="bg-transparent w-full text-xs gff outline-none text-white" placeholder="Search by Item ID, Name, Rare, or Icon Name...">
+
+            <input
+                id="lib-search-input"
+                oninput="filterLibraryItems()"
+                class="bg-transparent w-full text-xs gff outline-none text-white"
+                placeholder="Search by Item ID, Name, Rare, or Icon Name..."
+            >
+
         </div>
+
 
         <div class="flex justify-between items-center mb-3">
-            <button onclick="selectAllLibraryItems()" class="text-[10px] text-yellow-500 font-bold uppercase tracking-wider">Select All Matches</button>
-            <button onclick="deselectAllLibraryItems()" class="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Deselect All</button>
+
+            <button
+                type="button"
+                onclick="selectAllLibraryItems()"
+                class="text-[10px] text-yellow-500 font-bold uppercase tracking-wider"
+            >
+                Select All Matches
+            </button>
+
+            <button
+                type="button"
+                onclick="deselectAllLibraryItems()"
+                class="text-[10px] text-zinc-500 font-bold uppercase tracking-wider"
+            >
+                Deselect All
+            </button>
+
         </div>
 
-        <div id="lib-items-grid" class="overflow-y-auto pr-1 flex-1 mb-4 grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-3" style="max-height: 50vh;"></div>
-        
+
+        <div
+            id="lib-items-grid"
+            class="overflow-y-auto pr-1 flex-1 mb-4 grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-3"
+            style="max-height:50vh;"
+        ></div>
+
+
         <div class="flex flex-col sm:flex-row gap-2 mt-4 justify-between items-center w-full">
-            <button type="button" id="btn-lib-load-more" onclick="loadMoreLibraryItems()" class="text-xs text-yellow-500 font-bold uppercase tracking-widest hidden hover:underline">
+
+            <button
+                type="button"
+                id="btn-lib-load-more"
+                onclick="loadMoreLibraryItems()"
+                class="text-xs text-yellow-500 font-bold uppercase tracking-widest hidden hover:underline"
+            >
                 Load More Items
             </button>
-            <button id="btn-lib-import" onclick="importSelectedLibraryItems()" class="btn-mechanical btn-yellow px-6 text-xs font-bold italic uppercase h-12 w-full sm:w-auto" style="border-radius:10px; box-shadow: 0 4px 0 #c2a900;">
-                <i class="fa-solid fa-file-import mr-2"></i> Import Selected Items
+
+            <button
+                type="button"
+                id="btn-lib-import"
+                onclick="importSelectedLibraryItems()"
+                class="btn-mechanical btn-yellow px-6 text-xs font-bold italic uppercase h-12 w-full sm:w-auto"
+            >
+                <i class="fa-solid fa-file-import mr-2"></i>
+                Import Selected Items
             </button>
+
         </div>
+
     </div>
+
 </div>
+
+
+<!-- Loader -->
 
 <div id="kelly-loader">
+
     <div class="loader-wrapper">
+
         <div class="loader-ring"></div>
-        <img src="/api/assets/kelly-loader.gif" class="w-[95px] h-[95px] object-contain z-10" alt="Processing">
+
+        <img
+            src="./api/assets/kelly-loader.gif"
+            class="w-[95px] h-[95px] object-contain z-10"
+            alt="Processing"
+            onerror="this.style.display='none'"
+        >
+
     </div>
-    <p id="kelly-text" class="gff text-[#ffde00] text-[10px] mt-6 tracking-[0.4em] uppercase font-bold animate-pulse">Processing</p>
+
+    <p
+        id="kelly-text"
+        class="gff text-[#ffde00] text-[10px] mt-6 tracking-[0.4em] uppercase font-bold animate-pulse"
+    >
+        Processing
+    </p>
+
 </div>
 
-<script src="script.js"></script>
+
+<!--
+    QUAN TRỌNG:
+    GIỮ NGUYÊN script.js
+-->
+<script src="./script.js"></script>
+
 </body>
 </html>
