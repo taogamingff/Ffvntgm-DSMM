@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DANH SÁCH MONG MUỐN</title>
+    <title>WISHLIST COMMAND CENTER | MACXTOOLS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -17,9 +17,9 @@
 <div class="main-wrapper">
     <div id="view-login">
         <div class="text-center my-10 gff">
-            <span class="text-[64px] font-black italic block leading-[0.75]">QUẢN LÝ DANH SACH</span>
-            <span class="text-[64px] font-black italic block text-[#ffde00] leading-[0.85]">MONG MUỐN</span>
-            <p class="text-[11px] font-bold tracking-[0.25em] text-zinc-400 mt-3 uppercase">THÊM, XÓA DANH SÁC HMONG MUỐN</p>
+            <span class="text-[64px] font-black italic block leading-[0.75]">WISHLIST</span>
+            <span class="text-[64px] font-black italic block text-[#ffde00] leading-[0.85]">MANAGER</span>
+            <p class="text-[11px] font-bold tracking-[0.25em] text-zinc-400 mt-3 uppercase">ADD, REMOVE & MANAGE WISHLIST</p>
         </div>
         <div class="panel-container">
             <div class="flex mb-8 bg-black p-1 border border-zinc-900 rounded-full">
@@ -249,42 +249,6 @@
     <p id="kelly-text" class="gff text-[#ffde00] text-[10px] mt-6 tracking-[0.4em] uppercase font-bold animate-pulse">Processing</p>
 </div>
 
-
-<script>
-/* Network stability layer: keeps all existing /api/* endpoints unchanged. */
-(() => {
-    const nativeFetch = window.fetch.bind(window);
-
-    function isSameOriginApi(input) {
-        try {
-            const raw = typeof input === "string" ? input : input.url;
-            const url = new URL(raw, location.href);
-            return url.origin === location.origin && url.pathname.startsWith("/api/");
-        } catch (_) {
-            return false;
-        }
-    }
-
-    window.fetch = async (input, init = {}) => {
-        if (!isSameOriginApi(input)) return nativeFetch(input, init);
-
-        let lastError;
-        for (let attempt = 0; attempt < 4; attempt++) {
-            try {
-                // HTTP 4xx/5xx responses are returned normally to script.js.
-                return await nativeFetch(input, init);
-            } catch (error) {
-                lastError = error;
-                if (attempt < 3) {
-                    await new Promise(r => setTimeout(r, 400 * (attempt + 1)));
-                }
-            }
-        }
-        throw lastError;
-    };
-})();
-</script>
-
-<script src="./script.js" defer></script>
+<script src="script.js"></script>
 </body>
 </html>
