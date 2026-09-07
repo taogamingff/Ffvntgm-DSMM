@@ -1,983 +1,938 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>DANH SÁCH MONG MUỐN</title>
+    <meta charset="UTF-8">
 
-<style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#050505;color:#fff;font-family:Arial,Helvetica,sans-serif}
-body{min-height:100vh}
-button,input{font:inherit}
-button{cursor:pointer}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
 
-:root{
- --yellow:#ffde00;
- --green:#16a34a;
- --red:#dc2626;
- --panel:#0b0b0b;
- --border:#242424;
-}
+    <title>DANH SÁCH MONG MUỐN</title>
 
-header{
- height:64px;
- background:#000;
- border-bottom:2px solid var(--yellow);
- display:flex;
- justify-content:center;
- align-items:center;
- position:sticky;
- top:0;
- z-index:20;
-}
+    <!-- External libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-.logo{
- font-weight:1000;
- font-style:italic;
- letter-spacing:2px;
- color:var(--yellow);
- font-size:19px;
-}
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    >
 
-.main-wrapper{
- width:min(900px,94%);
- margin:auto;
-}
-
-.hero{text-align:center;margin:42px 0 30px}
-.hero h1{
- margin:0;
- font-size:clamp(38px,9vw,70px);
- line-height:.8;
- font-weight:1000;
- font-style:italic;
-}
-.hero h1 span{display:block;color:var(--yellow)}
-.hero p{
- margin-top:18px;
- color:#777;
- font-size:10px;
- letter-spacing:3px;
- font-weight:bold;
-}
-
-.panel{
- background:#0b0b0b;
- border:1px solid #1c1c1c;
- border-radius:18px;
- padding:22px;
- box-shadow:0 15px 50px rgba(0,0,0,.4);
-}
-
-.tabs{
- display:flex;
- gap:4px;
- padding:4px;
- background:#000;
- border:1px solid #222;
- border-radius:999px;
- margin-bottom:24px;
-}
-
-.tabs button{
- flex:1;
- border:0;
- border-radius:999px;
- padding:13px 8px;
- background:transparent;
- color:#666;
- font-size:10px;
- font-weight:900;
-}
-.tabs button.active{
- background:#292929;
- color:#fff;
-}
-
-.file-box{
- height:170px;
- border:2px dashed #252525;
- border-radius:15px;
- display:flex;
- flex-direction:column;
- justify-content:center;
- align-items:center;
- text-align:center;
- color:#666;
-}
-.file-box .icon{font-size:35px;margin-bottom:12px}
-.file-box small{font-size:10px;letter-spacing:1px}
-
-.hidden{display:none!important}
-
-.input{
- width:100%;
- height:58px;
- display:flex;
- align-items:center;
- background:#000;
- border:1px solid #252525;
- border-radius:12px;
- padding:0 15px;
- margin-bottom:12px;
-}
-.input span{color:#555;margin-right:12px}
-.input input{
- width:100%;
- background:transparent;
- border:0;
- outline:0;
- color:#fff;
- font-size:14px;
-}
-
-.remember{
- display:flex;
- align-items:center;
- gap:8px;
- color:#777;
- font-size:10px;
- letter-spacing:1px;
-}
-
-.btn{
- border:0;
- border-radius:12px;
- min-height:58px;
- font-weight:1000;
- font-style:italic;
- transition:.15s;
-}
-.btn:active{transform:translateY(3px)}
-
-.yellow{
- background:var(--yellow);
- color:#000;
- box-shadow:0 5px 0 #bca500;
-}
-.green{
- background:var(--green);
- color:#fff;
-}
-.red{
- background:var(--red);
- color:#fff;
-}
-.gray{
- background:#242424;
- color:#aaa;
-}
-
-.login-btn{
- width:100%;
- margin-top:24px;
- font-size:16px;
-}
-
-.account-title{text-align:center;margin:40px 0 25px}
-.account-title h2{
- margin:0;
- font-size:52px;
- line-height:.8;
- font-weight:1000;
- font-style:italic;
-}
-.account-title h2 span{display:block;color:var(--yellow)}
-
-.info-row{
- display:flex;
- justify-content:space-between;
- align-items:center;
- padding:18px;
- background:#000;
- border:1px solid #202020;
- border-radius:12px;
- margin-bottom:10px;
-}
-.info-label{color:#666;font-size:10px;font-weight:bold}
-.info-value{font-weight:bold}
-
-.dashboard-title{text-align:center;margin:30px 0}
-.dashboard-title h2{
- margin:0;
- font-size:38px;
- font-style:italic;
- font-weight:1000;
- line-height:.85;
-}
-.dashboard-title h2 span{display:block;color:var(--yellow)}
-.dashboard-title p{
- color:#555;
- font-size:9px;
- letter-spacing:2px;
-}
-
-.userbar{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin-bottom:25px;
- gap:15px;
-}
-.user{
- display:flex;
- align-items:center;
- gap:12px;
-}
-.avatar{
- width:48px;height:48px;
- border-radius:12px;
- background:#181818;
- display:flex;
- align-items:center;
- justify-content:center;
- color:var(--yellow);
- font-size:20px;
-}
-.nick{font-weight:900;font-style:italic}
-.uid{font-size:9px;color:#666;margin-top:4px}
-
-.actions{display:flex;gap:7px}
-.action{
- width:46px;height:46px;
- border:1px solid #292929;
- background:#151515;
- color:#aaa;
- border-radius:10px;
- font-size:17px;
-}
-.action.active{color:var(--yellow)}
-
-.search-row{
- display:flex;
- gap:8px;
- margin-bottom:15px;
-}
-.search-row .input{margin:0;flex:1}
-.search-row button{width:60px}
-
-.status{
- min-height:55px;
- border:1px solid #202020;
- background:#050505;
- border-radius:12px;
- display:flex;
- align-items:center;
- gap:12px;
- padding:12px 15px;
- color:#888;
- font-size:10px;
- text-transform:uppercase;
- letter-spacing:1px;
-}
-
-.count{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin-top:20px;
-}
-.count strong{color:var(--yellow);font-style:italic}
-.wipe{
- color:#ef4444;
- background:none;
- border:0;
- font-size:9px;
- font-weight:bold;
- letter-spacing:2px;
-}
-
-.grid{
- margin-top:20px;
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(115px,1fr));
- gap:10px;
-}
-
-.item{
- background:#0b0b0b;
- border:1px solid #222;
- border-radius:13px;
- padding:12px;
- min-height:115px;
- position:relative;
-}
-.item-id{
- color:var(--yellow);
- font-weight:bold;
- font-size:11px;
-}
-.item-name{
- color:#aaa;
- font-size:10px;
- margin-top:7px;
- word-break:break-word;
-}
-.item-remove{
- position:absolute;
- top:7px;
- right:7px;
- border:0;
- background:#220909;
- color:#ef4444;
- width:25px;
- height:25px;
- border-radius:7px;
-}
-
-.modal{
- position:fixed;
- inset:0;
- background:rgba(0,0,0,.78);
- backdrop-filter:blur(7px);
- display:none;
- align-items:center;
- justify-content:center;
- padding:20px;
- z-index:100;
-}
-.modal.show{display:flex}
-.modal-box{
- width:min(470px,100%);
- background:#0c0c0c;
- border:1px solid #292929;
- border-top:3px solid var(--yellow);
- border-radius:16px;
- padding:24px;
-}
-.modal-box h3{margin:0 0 10px;font-style:italic}
-.modal-box p{color:#666;font-size:11px}
-.modal-buttons{display:flex;gap:10px;margin-top:22px}
-.modal-buttons button{flex:1}
-
-.notice{
- position:fixed;
- left:50%;
- bottom:20px;
- transform:translateX(-50%) translateY(100px);
- background:#111;
- border:1px solid #333;
- color:#fff;
- padding:13px 18px;
- border-radius:10px;
- font-size:11px;
- z-index:200;
- transition:.25s;
- box-shadow:0 10px 30px #000;
-}
-.notice.show{transform:translateX(-50%) translateY(0)}
-
-.library-search{margin-bottom:15px}
-
-@media(max-width:600px){
- .panel{padding:15px}
- .userbar{align-items:flex-start}
- .actions{flex-shrink:0}
- .grid{grid-template-columns:repeat(3,1fr)}
- .item{min-height:105px}
- .account-title h2{font-size:43px}
-}
-</style>
+    <!-- GIỮ NGUYÊN style.css -->
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-<header>
- <div class="logo">FF • WISHLIST</div>
+<header class="flex justify-center items-center h-16 bg-black border-b-2 border-[#ffde00] sticky top-0">
+
+    <img
+        src="./api/assets/logo.png"
+        class="h-7"
+        alt="Logo"
+        onerror="this.style.display='none'"
+    >
+
 </header>
 
-<main class="main-wrapper">
 
-<!-- LOGIN -->
-<section id="loginView">
+<div class="main-wrapper">
 
- <div class="hero">
-  <h1>QUẢN LÝ DANH SÁCH<span>MONG MUỐN</span></h1>
-  <p>THÊM • XÓA • QUẢN LÝ DANH SÁCH</p>
- </div>
+    <!-- LOGIN -->
 
- <div class="panel">
+    <div id="view-login">
 
-  <div class="tabs">
-   <button id="tabFile" class="active" onclick="switchTab('file')">📁 GUEST FILE</button>
-   <button id="tabManual" onclick="switchTab('manual')">⌨ MANUAL</button>
-  </div>
+        <div class="text-center my-10 gff">
 
-  <div id="fileBox">
-   <div class="file-box" onclick="document.getElementById('guestFile').click()">
-    <div class="icon">📂</div>
-    <small id="fileLabel">SELECT GUEST.DAT</small>
-   </div>
-   <input id="guestFile" type="file" hidden>
-  </div>
+            <span class="text-[64px] font-black italic block leading-[0.75]">
+                QUẢN LÝ DANH SACH
+            </span>
 
-  <div id="manualBox" class="hidden">
+            <span class="text-[64px] font-black italic block text-[#ffde00] leading-[0.85]">
+                MONG MUỐN
+            </span>
 
-   <div class="input">
-    <span>👤</span>
-    <input id="uidInput" inputmode="numeric" placeholder="Account UID">
-   </div>
+            <p class="text-[11px] font-bold tracking-[0.25em] text-zinc-400 mt-3 uppercase">
+                THÊM, XÓA DANH SÁCH MONG MUỐN
+            </p>
 
-   <div class="input">
-    <span>🔑</span>
-    <input id="passInput" type="password" placeholder="Password">
-   </div>
-
-   <label class="remember">
-    <input id="remember" type="checkbox">
-    REMEMBER LOGIN
-   </label>
-
-  </div>
-
-  <button class="btn yellow login-btn" onclick="login()">
-   ⚡ LOGIN ACCOUNT
-  </button>
-
- </div>
-</section>
+        </div>
 
 
-<!-- INFO -->
-<section id="infoView" class="hidden">
+        <div class="panel-container">
 
- <div class="account-title">
-  <h2>ACCOUNT<span>INFO</span></h2>
- </div>
+            <div class="flex mb-8 bg-black p-1 border border-zinc-900 rounded-full">
 
- <div class="panel">
-
-  <div class="info-row">
-   <span class="info-label">NICKNAME</span>
-   <span id="infoNick" class="info-value">---</span>
-  </div>
-
-  <div class="info-row">
-   <span class="info-label">UID</span>
-   <span id="infoUid" class="info-value" style="color:#ffde00">---</span>
-  </div>
-
-  <div class="info-row">
-   <span class="info-label">REGION</span>
-   <span id="infoRegion" class="info-value">VN</span>
-  </div>
-
-  <button class="btn yellow" style="width:100%;margin-top:10px" onclick="openDashboard()">
-   CONFIRM LOGIN →
-  </button>
-
- </div>
-</section>
+                <button
+                    type="button"
+                    id="t-file"
+                    class="flex-1 py-3 text-[10px] font-black rounded-full text-white bg-zinc-800 flex items-center justify-center gap-2"
+                    onclick="switchTab('file')"
+                >
+                    <i class="fa-solid fa-file-invoice"></i>
+                    GUEST FILE
+                </button>
 
 
-<!-- DASHBOARD -->
-<section id="dashView" class="hidden">
+                <button
+                    type="button"
+                    id="t-manual"
+                    class="flex-1 py-3 text-[10px] font-black rounded-full text-zinc-600 flex items-center justify-center gap-2"
+                    onclick="switchTab('manual')"
+                >
+                    <i class="fa-solid fa-keyboard"></i>
+                    MANUAL
+                </button>
 
- <div class="dashboard-title">
-  <h2>WISHLIST<span>COMMAND CENTER</span></h2>
-  <p>MANAGE • LOOKUP • ICON LIBRARY</p>
- </div>
+            </div>
 
- <div class="panel">
 
-  <div class="userbar">
+            <div id="box-file">
 
-   <div class="user">
-    <div class="avatar">👤</div>
-    <div>
-     <div id="dashNick" class="nick">---</div>
-     <div class="uid">VN • UID: <span id="dashUid">---</span></div>
+                <div
+                    id="drop-zone"
+                    class="h-44 flex flex-col items-center justify-center rounded-2xl cursor-pointer bg-[#050505] border-2 border-dashed border-zinc-900 transition-all duration-200"
+                    onclick="document.getElementById('accInp').click()"
+                >
+
+                    <i class="fa-solid fa-folder-open text-3xl text-zinc-800 mb-3"></i>
+
+                    <p
+                        id="f-label"
+                        class="gff text-[10px] text-zinc-600 uppercase select-none text-center px-4"
+                    >
+                        Select or Drag & Drop guest.dat
+                    </p>
+
+                </div>
+
+
+                <input
+                    type="file"
+                    id="accInp"
+                    class="hidden"
+                >
+
+            </div>
+
+
+            <div id="box-manual" class="hidden space-y-4">
+
+                <div class="relative h-14 bg-black border border-zinc-900 rounded-xl flex items-center px-4">
+
+                    <i class="fa-solid fa-user-tag text-zinc-700 mr-4"></i>
+
+                    <input
+                        id="in-uid"
+                        class="bg-transparent w-full text-sm gff outline-none"
+                        placeholder="Account UID"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="relative h-14 bg-black border border-zinc-900 rounded-xl flex items-center px-4">
+
+                    <i class="fa-solid fa-key text-zinc-700 mr-4"></i>
+
+                    <input
+                        id="in-pass"
+                        type="password"
+                        class="bg-transparent w-full text-sm gff outline-none"
+                        placeholder="Password"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="flex items-center gap-2 px-1 pt-1">
+
+                    <input
+                        type="checkbox"
+                        id="remember-me"
+                        class="w-4 h-4 accent-[#ffde00] rounded bg-black border border-zinc-800 cursor-pointer"
+                    >
+
+                    <label
+                        for="remember-me"
+                        class="gff text-[10px] text-zinc-500 uppercase tracking-widest cursor-pointer select-none hover:text-zinc-300 transition-colors"
+                    >
+                        Remember Login
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="performAuth()"
+                class="btn-mechanical btn-yellow w-full h-16 mt-8 text-lg font-bold italic"
+            >
+
+                <svg
+                    class="w-7 h-7"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+                    <path d="M7 21L10 13H5L17 3L14 11H19L7 21Z"/>
+                </svg>
+
+                LOGIN ACCOUNT
+
+            </button>
+
+        </div>
+
     </div>
-   </div>
-
-   <div class="actions">
-    <button class="action active" title="Wishlist" onclick="showMode('wishlist')">＋</button>
-    <button class="action" title="Lookup" onclick="showMode('lookup')">⌕</button>
-    <button class="action" title="Library" onclick="openLibrary()">▦</button>
-    <button class="action" title="Logout" onclick="logout()">↪</button>
-   </div>
-
-  </div>
 
 
-  <!-- WISHLIST -->
-  <div id="wishlistMode">
+    <!-- ACCOUNT INFO -->
 
-   <div class="search-row">
+    <div id="view-info" class="hidden">
 
-    <div class="input">
-     <span>🔎</span>
-     <input id="itemInput" placeholder="Enter Item ID or Name..." onkeydown="enterAdd(event)">
+        <div class="text-center my-10 gff">
+
+            <span class="text-[54px] font-black italic block text-white uppercase">
+                Account
+            </span>
+
+            <span class="text-[54px] font-black italic block text-[#ffde00] uppercase">
+                Info
+            </span>
+
+        </div>
+
+
+        <div class="panel-container space-y-4">
+
+            <div class="flex justify-between p-5 bg-black rounded-xl border border-zinc-900 items-center">
+
+                <div class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-signature text-zinc-700"></i>
+
+                    <span class="text-zinc-500 text-[10px] gff">
+                        NICKNAME
+                    </span>
+
+                </div>
+
+                <span id="res-nick" class="gff text-white italic">
+                    ---
+                </span>
+
+            </div>
+
+
+            <div class="flex justify-between p-5 bg-black rounded-xl border border-zinc-900 items-center">
+
+                <div class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-id-badge text-zinc-700"></i>
+
+                    <span class="text-zinc-500 text-[10px] gff">
+                        UID
+                    </span>
+
+                </div>
+
+                <span id="res-uid" class="text-yellow-500 gff">
+                    ---
+                </span>
+
+            </div>
+
+
+            <div class="flex justify-between p-5 bg-black rounded-xl border border-zinc-900 items-center">
+
+                <div class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-earth-americas text-zinc-700"></i>
+
+                    <span class="text-zinc-500 text-[10px] gff">
+                        REGION
+                    </span>
+
+                </div>
+
+                <span id="res-reg" class="text-white gff uppercase">
+                    ---
+                </span>
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="toDash()"
+                class="btn-mechanical btn-yellow w-full h-16 mt-4 font-bold text-lg italic uppercase"
+            >
+                Confirm login
+                <i class="fa-solid fa-angles-right"></i>
+            </button>
+
+        </div>
+
     </div>
 
-    <button class="btn green" onclick="addItem()">＋</button>
-    <button class="btn red" onclick="removeLast()">🗑</button>
 
-   </div>
+    <!-- DASHBOARD -->
 
-   <div class="status">
-    <span>●</span>
-    <span id="statusText">READY — LOCAL MODE</span>
-   </div>
+    <div id="view-dash" class="hidden mt-10">
 
-   <div class="count">
-    <strong id="countText">00/80</strong>
-    <button class="wipe" onclick="openWipe()">WIPE WISHLIST</button>
-   </div>
+        <div class="text-center my-6 gff">
 
-   <div id="wishGrid" class="grid"></div>
+            <span class="text-[36px] font-black italic block leading-[0.75] text-white">
+                WISHLIST
+            </span>
 
-  </div>
+            <span class="text-[36px] font-black italic block text-[#ffde00] leading-[0.85]">
+                COMMAND CENTER
+            </span>
+
+            <p class="text-[9px] font-bold tracking-[0.2em] text-zinc-500 mt-2 uppercase">
+                MANAGE • LOOKUP • ICON LIBRARY
+            </p>
+
+        </div>
 
 
-  <!-- LOOKUP -->
-  <div id="lookupMode" class="hidden">
+        <div class="panel-container">
 
-   <div class="search-row">
-    <div class="input">
-     <span>👤</span>
-     <input id="lookupUid" inputmode="numeric" placeholder="Enter Player UID">
+            <div class="flex items-center justify-between mb-8">
+
+                <div class="flex items-center gap-4">
+
+                    <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
+                        <i class="fa-solid fa-user text-yellow-500 text-xl"></i>
+                    </div>
+
+                    <div>
+
+                        <div
+                            class="gff text-xl italic text-white"
+                            id="d-nick"
+                        >
+                            ---
+                        </div>
+
+                        <div class="flex items-center gap-2 mt-1">
+
+                            <span
+                                class="bg-zinc-800 text-[#ffde00] border border-zinc-700 px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider"
+                                id="d-reg-badge"
+                            >
+                                VN
+                            </span>
+
+                            <span class="gff text-[9px] text-zinc-500 uppercase tracking-wider">
+                                UID:
+                                <span
+                                    id="d-uid-ghost"
+                                    class="text-white"
+                                >
+                                    ---
+                                </span>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flex items-center">
+
+                    <button
+                        type="button"
+                        id="btn-search-toggle"
+                        onclick="toggleSearchView()"
+                        class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-[#ffde00] mr-2"
+                        title="Switch to Lookup mode"
+                    >
+
+                        <div
+                            id="icon-search-standard"
+                            class="relative w-5 h-5 flex items-center justify-center"
+                        >
+
+                            <i class="fa-solid fa-user text-base"></i>
+
+                            <i
+                                class="fa-solid fa-magnifying-glass text-[9px] absolute -bottom-1 -right-1 text-[#ffde00]"
+                            ></i>
+
+                        </div>
+
+
+                        <i
+                            id="icon-search-active"
+                            class="fa-solid fa-plus-minus text-base hidden"
+                        ></i>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="btn-library-toggle"
+                        onclick="toggleLibraryView()"
+                        class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-zinc-400 mr-2"
+                        title="Switch to Icon Library finder"
+                    >
+
+                        <i
+                            id="icon-lib-standard"
+                            class="fa-solid fa-images text-base"
+                        ></i>
+
+                        <i
+                            id="icon-lib-active"
+                            class="fa-solid fa-plus-minus text-base hidden"
+                        ></i>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="openLogoutModal()"
+                        class="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-xl text-red-500"
+                    >
+
+                        <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+
+                            <polyline points="16 17 21 12 16 7"></polyline>
+
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- STANDARD -->
+
+            <div
+                id="row-standard"
+                class="relative flex gap-2 items-start"
+            >
+
+                <div class="flex-1 input-mechanical px-4 flex items-center relative">
+
+                    <input
+                        id="item-id"
+                        class="bg-transparent w-full text-sm gff outline-none text-white"
+                        placeholder="Enter ItemId(s) or Search Name..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    onclick="processRequest('add')"
+                    class="btn-mechanical btn-green"
+                >
+                    <i class="fa-solid fa-plus text-xl"></i>
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="processRequest('rem')"
+                    class="btn-mechanical btn-red"
+                >
+                    <i class="fa-solid fa-trash-can text-lg"></i>
+                </button>
+
+
+                <div
+                    id="autocomplete-results"
+                    class="autocomplete-box hidden"
+                ></div>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div
+                id="row-search"
+                class="hidden flex gap-2 items-start"
+            >
+
+                <div class="flex-1 input-mechanical px-4 flex items-center">
+
+                    <input
+                        id="search-uid"
+                        class="bg-transparent w-full text-sm gff outline-none text-white"
+                        placeholder="Enter Player UID to Search"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    onclick="performLookup()"
+                    class="btn-mechanical btn-yellow"
+                    style="width:64px;height:64px;"
+                >
+
+                    <i class="fa-solid fa-magnifying-glass text-xl"></i>
+
+                </button>
+
+            </div>
+
+
+            <!-- LIBRARY -->
+
+            <div
+                id="row-library"
+                class="hidden flex gap-2 items-start w-full"
+            >
+
+                <button
+                    type="button"
+                    onclick="openLibraryModal()"
+                    class="btn-mechanical btn-yellow w-full h-[69px] text-sm font-black italic uppercase tracking-wider"
+                    style="border-radius:14px;box-shadow:0 5px 0 #c2a900;"
+                >
+
+                    <i class="fa-solid fa-images text-xl mr-2 animate-pulse"></i>
+
+                    OPEN ICON LIBRARY
+
+                </button>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div id="status-box" class="status-window">
+
+                <div
+                    id="status-icon"
+                    class="w-6 h-6 flex items-center justify-center"
+                ></div>
+
+                <div class="flex flex-col flex-1 gap-1">
+
+                    <span
+                        id="status-text"
+                        class="gff text-[9px] uppercase tracking-widest text-zinc-400"
+                    >
+                        Ready
+                    </span>
+
+                    <div class="progress-bar-small">
+
+                        <div
+                            id="p-fill"
+                            class="progress-fill-small"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="flex justify-between items-center mt-6">
+
+                <span
+                    class="gff text-[14px] text-yellow-500 italic"
+                    id="d-count"
+                >
+                    00/80
+                </span>
+
+
+                <button
+                    type="button"
+                    onclick="openWipeModal()"
+                    class="text-[10px] text-red-600 font-bold uppercase tracking-[0.2em] gff"
+                >
+                    WIPE WISHLIST
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="wish-grid" class="wish-grid"></div>
+
     </div>
 
-    <button class="btn yellow" onclick="lookup()">⌕</button>
-   </div>
 
-   <div class="status">
-    <span>ℹ</span>
-    <span id="lookupStatus">LOOKUP LOCAL DATA</span>
-   </div>
+    <div class="h-16"></div>
 
-  </div>
-
- </div>
-</section>
-
-</main>
-
-
-<!-- LIBRARY -->
-<div id="libraryModal" class="modal">
-
- <div class="modal-box">
-
-  <h3>▦ ICON LIBRARY</h3>
-  <p>Local item library — không cần kết nối mạng.</p>
-
-  <div class="input library-search">
-   <span>🔎</span>
-   <input id="libraryInput" placeholder="Search Item ID / Name..." oninput="filterLibrary()">
-  </div>
-
-  <div id="libraryGrid" class="grid"></div>
-
-  <button class="btn gray" style="width:100%;margin-top:18px" onclick="closeLibrary()">
-   CLOSE
-  </button>
-
- </div>
 </div>
 
 
-<!-- WIPE -->
-<div id="wipeModal" class="modal">
+<!-- WIPE MODAL -->
 
- <div class="modal-box">
+<div id="modal-wipe" class="modal-overlay">
 
-  <h3>XÓA DANH SÁCH?</h3>
-  <p>Tất cả item đã lưu trên trình duyệt sẽ bị xóa.</p>
+    <div class="modal-box">
 
-  <div class="modal-buttons">
+        <h2 class="gff text-xl italic text-white mb-2">
+            Remove All Items From Account?
+        </h2>
 
-   <button class="btn gray" onclick="closeWipe()">CANCEL</button>
+        <p class="text-zinc-500 text-[11px] uppercase tracking-widest">
+            This action cannot be undone
+        </p>
 
-   <button class="btn red" onclick="wipeAll()">CLEAR ALL</button>
+        <div class="flex gap-4 mt-8">
 
-  </div>
+            <button
+                type="button"
+                onclick="closeModal('modal-wipe')"
+                class="flex-1 h-14 btn-mechanical btn-gray text-[10px]"
+            >
+                Cancel
+            </button>
 
- </div>
+
+            <button
+                type="button"
+                onclick="fullPurge()"
+                class="flex-1 h-14 btn-mechanical btn-yellow text-[10px]"
+            >
+                Clear All
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
 
-<div id="notice" class="notice"></div>
-
-
-<script>
-"use strict";
-
-/*
- * BẢN NÀY KHÔNG GỌI API BÊN NGOÀI.
- * Vì vậy không có fetch() / XMLHttpRequest() gây
- * "Network connection error."
- */
-
-const STORAGE_KEY = "ff_wishlist_local_v1";
-const ACCOUNT_KEY = "ff_account_local_v1";
-
-let account = null;
-let items = [];
-
-const library = [
- {id:"1001",name:"Item 1001"},
- {id:"1002",name:"Item 1002"},
- {id:"1003",name:"Item 1003"},
- {id:"1004",name:"Item 1004"},
- {id:"1005",name:"Item 1005"},
- {id:"2001",name:"Bundle 2001"},
- {id:"2002",name:"Bundle 2002"},
- {id:"3001",name:"Weapon 3001"},
- {id:"3002",name:"Weapon 3002"},
- {id:"4001",name:"Character 4001"},
- {id:"4002",name:"Character 4002"},
- {id:"5001",name:"Pet 5001"}
-];
+<!-- LOGOUT MODAL -->
 
-function $(id){
- return document.getElementById(id);
-}
+<div id="modal-logout" class="modal-overlay">
 
-function notice(text){
- const n=$("notice");
- n.textContent=text;
- n.classList.add("show");
- clearTimeout(window.noticeTimer);
- window.noticeTimer=setTimeout(()=>{
-  n.classList.remove("show");
- },2200);
-}
+    <div class="modal-box">
 
-function save(){
- try{
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(items));
- }catch(e){}
-}
+        <h2 class="gff text-xl italic text-white mb-2">
+            Are You Sure You Want To Logout?
+        </h2>
 
-function load(){
- try{
-  const data=JSON.parse(localStorage.getItem(STORAGE_KEY));
-  if(Array.isArray(data)) items=data.slice(0,80);
- }catch(e){
-  items=[];
- }
-}
+        <p class="text-zinc-500 text-[11px] uppercase tracking-widest">
+            Login again to manage your list
+        </p>
 
-function switchTab(type){
+        <div class="flex gap-4 mt-8">
 
- const file=type==="file";
+            <button
+                type="button"
+                onclick="closeModal('modal-logout')"
+                class="flex-1 h-14 btn-mechanical btn-gray text-[10px]"
+            >
+                Cancel
+            </button>
 
- $("fileBox").classList.toggle("hidden",!file);
- $("manualBox").classList.toggle("hidden",file);
 
- $("tabFile").classList.toggle("active",file);
- $("tabManual").classList.toggle("active",!file);
-}
+            <button
+                type="button"
+                id="btn-logout"
+                onclick="performLogout()"
+                class="flex-1 h-14 btn-mechanical btn-red text-[10px]"
+            >
+                Logout
+            </button>
 
-$("guestFile").addEventListener("change",function(){
+        </div>
 
- const file=this.files[0];
+    </div>
 
- if(file){
-  $("fileLabel").textContent=file.name.toUpperCase();
-  notice("Guest file đã chọn");
- }
+</div>
 
-});
 
-function login(){
+<!-- SEARCH RESULTS -->
 
- let uid=$("uidInput").value.trim();
+<div id="modal-search-results" class="modal-overlay">
 
- if(!uid){
-  uid="LOCAL-"+Math.floor(100000+Math.random()*900000);
- }
+    <div
+        class="modal-box"
+        style="max-width:500px;max-height:85vh;display:flex;flex-direction:column;padding:24px;"
+    >
 
- account={
-  uid:uid,
-  nick:"FF PLAYER",
-  region:"VN"
- };
+        <div class="flex justify-between items-center mb-4">
 
- try{
-  localStorage.setItem(ACCOUNT_KEY,JSON.stringify(account));
- }catch(e){}
+            <h3 class="gff text-lg text-white uppercase italic">
+                Searched Wishlist
+            </h3>
 
- $("infoNick").textContent=account.nick;
- $("infoUid").textContent=account.uid;
- $("infoRegion").textContent=account.region;
 
- $("loginView").classList.add("hidden");
- $("infoView").classList.remove("hidden");
+            <button
+                type="button"
+                onclick="closeModal('modal-search-results')"
+                class="text-zinc-500 hover:text-white transition"
+            >
 
- notice("Đăng nhập local thành công");
-}
+                <i class="fa-solid fa-xmark text-xl"></i>
 
-function openDashboard(){
+            </button>
 
- $("infoView").classList.add("hidden");
- $("dashView").classList.remove("hidden");
+        </div>
 
- $("dashNick").textContent=account.nick;
- $("dashUid").textContent=account.uid;
 
- load();
- render();
+        <div class="flex justify-between items-center bg-black p-3 rounded-xl border border-zinc-900 mb-4 text-xs font-bold">
 
-}
+            <span class="text-zinc-500 uppercase">
+                Region:
 
-function showMode(mode){
+                <span
+                    id="modal-search-reg"
+                    class="text-yellow-500 ml-1"
+                >
+                    ---
+                </span>
 
- $("wishlistMode").classList.toggle("hidden",mode!=="wishlist");
- $("lookupMode").classList.toggle("hidden",mode!=="lookup");
+            </span>
 
-}
 
-function setStatus(text){
- $("statusText").textContent=text;
-}
+            <span class="text-zinc-500 uppercase">
 
-function addItem(){
+                UID:
 
- if(items.length>=80){
-  setStatus("LIMIT 80 ITEMS");
-  notice("Đã đạt giới hạn 80 item");
-  return;
- }
+                <span
+                    id="modal-search-uid"
+                    class="text-white ml-1"
+                >
+                    ---
+                </span>
 
- const input=$("itemInput");
- const value=input.value.trim();
+            </span>
 
- if(!value){
-  notice("Nhập Item ID hoặc tên item");
-  return;
- }
+        </div>
 
- const exists=items.some(x=>x.id.toLowerCase()===value.toLowerCase());
 
- if(exists){
-  notice("Item đã có trong danh sách");
-  return;
- }
+        <div class="flex justify-between items-center mb-3">
 
- items.push({
-  id:value,
-  name:"Wishlist Item"
- });
+            <button
+                type="button"
+                onclick="selectAllSearchItems()"
+                class="text-[10px] text-yellow-500 font-bold uppercase tracking-wider"
+            >
+                Select All Available
+            </button>
 
- save();
- render();
 
- input.value="";
- setStatus("ITEM ADDED — LOCAL");
- notice("Đã thêm item");
-}
+            <button
+                type="button"
+                onclick="deselectAllSearchItems()"
+                class="text-[10px] text-zinc-500 font-bold uppercase tracking-wider"
+            >
+                Deselect All
+            </button>
 
-function enterAdd(e){
- if(e.key==="Enter"){
-  e.preventDefault();
-  addItem();
- }
-}
+        </div>
 
-function removeItem(index){
 
- if(index<0 || index>=items.length)return;
+        <div
+            id="search-results-grid"
+            class="overflow-y-auto pr-1 flex-1 mb-6 grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2"
+            style="max-height:40vh;"
+        ></div>
 
- items.splice(index,1);
 
- save();
- render();
+        <button
+            type="button"
+            id="btn-import-items"
+            onclick="importSelectedItems()"
+            class="btn-mechanical btn-yellow w-full h-14 text-sm font-bold italic uppercase"
+        >
 
- setStatus("ITEM REMOVED — LOCAL");
-}
+            <i class="fa-solid fa-file-import mr-2"></i>
 
-function removeLast(){
+            Import Selected Items
 
- if(!items.length){
-  notice("Danh sách đang trống");
-  return;
- }
+        </button>
 
- removeItem(items.length-1);
-}
+    </div>
 
-function render(){
+</div>
 
- const grid=$("wishGrid");
- grid.innerHTML="";
 
- items.forEach((item,index)=>{
+<!-- ICON LIBRARY -->
 
-  const el=document.createElement("div");
-  el.className="item";
+<div id="modal-library" class="modal-overlay">
 
-  const id=document.createElement("div");
-  id.className="item-id";
-  id.textContent=item.id;
+    <div
+        class="modal-box"
+        style="max-width:680px;max-height:85vh;display:flex;flex-direction:column;padding:24px;border-top:4px solid var(--ff-yellow);"
+    >
 
-  const name=document.createElement("div");
-  name.className="item-name";
-  name.textContent=item.name||"Wishlist Item";
+        <div class="flex justify-between items-center mb-4">
 
-  const remove=document.createElement("button");
-  remove.className="item-remove";
-  remove.textContent="×";
-  remove.onclick=()=>removeItem(index);
+            <h3 class="gff text-lg text-white uppercase italic flex items-center gap-2">
 
-  el.appendChild(id);
-  el.appendChild(name);
-  el.appendChild(remove);
+                <i class="fa-solid fa-images text-yellow-500"></i>
 
-  grid.appendChild(el);
- });
+                Icon Library Finder
 
- $("countText").textContent=
- String(items.length).padStart(2,"0")+"/80";
-}
+            </h3>
 
-function openWipe(){
- $("wipeModal").classList.add("show");
-}
 
-function closeWipe(){
- $("wipeModal").classList.remove("show");
-}
+            <button
+                type="button"
+                onclick="closeModal('modal-library')"
+                class="text-zinc-500 hover:text-white transition"
+            >
 
-function wipeAll(){
+                <i class="fa-solid fa-xmark text-xl"></i>
 
- items=[];
- save();
- render();
+            </button>
 
- closeWipe();
- setStatus("WISHLIST CLEARED");
- notice("Đã xóa toàn bộ wishlist");
-}
+        </div>
 
-function openLibrary(){
 
- $("libraryModal").classList.add("show");
- renderLibrary(library);
+        <div class="relative h-12 bg-black border border-zinc-800 rounded-xl flex items-center px-4 mb-4">
 
-}
+            <i class="fa-solid fa-magnifying-glass text-zinc-500 mr-3"></i>
 
-function closeLibrary(){
- $("libraryModal").classList.remove("show");
-}
+            <input
+                id="lib-search-input"
+                oninput="filterLibraryItems()"
+                class="bg-transparent w-full text-xs gff outline-none text-white"
+                placeholder="Search by Item ID, Name, Rare, or Icon Name..."
+                autocomplete="off"
+            >
 
-function renderLibrary(list){
+        </div>
 
- const grid=$("libraryGrid");
- grid.innerHTML="";
 
- list.forEach(item=>{
+        <div class="flex justify-between items-center mb-3">
 
-  const el=document.createElement("div");
-  el.className="item";
+            <button
+                type="button"
+                onclick="selectAllLibraryItems()"
+                class="text-[10px] text-yellow-500 font-bold uppercase tracking-wider"
+            >
+                Select All Matches
+            </button>
 
-  el.innerHTML=
-   '<div class="item-id"></div>'+
-   '<div class="item-name"></div>';
 
-  el.querySelector(".item-id").textContent=item.id;
-  el.querySelector(".item-name").textContent=item.name;
+            <button
+                type="button"
+                onclick="deselectAllLibraryItems()"
+                class="text-[10px] text-zinc-500 font-bold uppercase tracking-wider"
+            >
+                Deselect All
+            </button>
 
-  el.onclick=()=>{
-   $("itemInput").value=item.id;
-   closeLibrary();
-   showMode("wishlist");
-   notice("Đã chọn "+item.id);
-  };
+        </div>
 
-  grid.appendChild(el);
 
- });
-}
+        <div
+            id="lib-items-grid"
+            class="overflow-y-auto pr-1 flex-1 mb-4 grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-3"
+            style="max-height:50vh;"
+        ></div>
 
-function filterLibrary(){
 
- const q=$("libraryInput").value.toLowerCase().trim();
+        <div class="flex flex-col sm:flex-row gap-2 mt-4 justify-between items-center w-full">
 
- if(!q){
-  renderLibrary(library);
-  return;
- }
+            <button
+                type="button"
+                id="btn-lib-load-more"
+                onclick="loadMoreLibraryItems()"
+                class="text-xs text-yellow-500 font-bold uppercase tracking-widest hidden hover:underline"
+            >
+                Load More Items
+            </button>
 
- const result=library.filter(x=>
-  x.id.toLowerCase().includes(q) ||
-  x.name.toLowerCase().includes(q)
- );
 
- renderLibrary(result);
-}
+            <button
+                type="button"
+                id="btn-lib-import"
+                onclick="importSelectedLibraryItems()"
+                class="btn-mechanical btn-yellow px-6 text-xs font-bold italic uppercase h-12 w-full sm:w-auto"
+                style="border-radius:10px;box-shadow:0 4px 0 #c2a900;"
+            >
 
-function lookup(){
+                <i class="fa-solid fa-file-import mr-2"></i>
 
- const uid=$("lookupUid").value.trim();
+                Import Selected Items
 
- if(!uid){
-  notice("Nhập UID cần tìm");
-  return;
- }
+            </button>
 
- if(account && uid===account.uid){
-  $("lookupStatus").textContent=
-   "FOUND • "+account.nick+" • "+account.region;
- }else{
-  $("lookupStatus").textContent=
-   "NO LOCAL DATA FOR UID "+uid;
- }
+        </div>
 
-}
+    </div>
 
-function logout(){
+</div>
 
- account=null;
 
- try{
-  localStorage.removeItem(ACCOUNT_KEY);
- }catch(e){}
+<!-- LOADER -->
 
- $("dashView").classList.add("hidden");
- $("infoView").classList.add("hidden");
- $("loginView").classList.remove("hidden");
+<div id="kelly-loader">
 
- notice("Đã đăng xuất");
-}
+    <div class="loader-wrapper">
 
-function restore(){
+        <div class="loader-ring"></div>
 
- try{
-  const saved=JSON.parse(localStorage.getItem(ACCOUNT_KEY));
+        <img
+            src="./api/assets/kelly-loader.gif"
+            class="w-[95px] h-[95px] object-contain z-10"
+            alt="Processing"
+            onerror="this.style.display='none'"
+        >
 
-  if(saved && saved.uid){
-   account=saved;
+    </div>
 
-   $("infoNick").textContent=account.nick;
-   $("infoUid").textContent=account.uid;
-   $("infoRegion").textContent=account.region;
 
-   $("dashNick").textContent=account.nick;
-   $("dashUid").textContent=account.uid;
-  }
- }catch(e){}
-}
+    <p
+        id="kelly-text"
+        class="gff text-[#ffde00] text-[10px] mt-6 tracking-[0.4em] uppercase font-bold animate-pulse"
+    >
+        Processing
+    </p>
 
-load();
-restore();
+</div>
 
-/*
- * Đảm bảo các lỗi JavaScript không biến thành
- * "Network connection error."
- */
-window.addEventListener("error",function(e){
- console.warn("Application error:",e.message);
-});
 
-window.addEventListener("unhandledrejection",function(e){
- console.warn("Unhandled error:",e.reason);
-});
+<!--
+========================================================
+GIỮ NGUYÊN SCRIPT.JS
+========================================================
+Không gộp, không thay đổi, không viết lại.
+-->
 
-</script>
+<script src="./script.js"></script>
 
 </body>
-    </html>
+</html>
