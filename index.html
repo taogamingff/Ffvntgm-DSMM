@@ -241,6 +241,30 @@
     </div>
 </div>
 
+<!-- ===== NETWORK ERROR MODAL (Thêm mới) ===== -->
+<div id="modal-network-error" class="modal-overlay hidden">
+    <div class="modal-box" style="border-top-color: #ef4444;">
+        <div class="text-center mb-4">
+            <div class="w-16 h-16 mx-auto mb-4 bg-red-500/10 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-wifi text-3xl text-red-500"></i>
+            </div>
+            <h2 class="gff text-xl italic text-white mb-2">NETWORK CONNECTION ERROR</h2>
+            <p class="text-zinc-500 text-[11px] uppercase tracking-widest">Unable to connect to server</p>
+        </div>
+        <div class="bg-black border border-zinc-800 rounded-xl p-4 mb-6">
+            <p class="text-zinc-400 text-xs text-center" id="network-error-message">
+                Please check your internet connection and try again.
+            </p>
+        </div>
+        <div class="flex gap-4">
+            <button type="button" onclick="closeModal('modal-network-error')" class="flex-1 h-14 btn-mechanical btn-gray text-[10px]">Cancel</button>
+            <button type="button" onclick="retryLastAction()" class="flex-1 h-14 btn-mechanical btn-yellow text-[10px]">
+                <i class="fa-solid fa-rotate-right mr-2"></i> Retry
+            </button>
+        </div>
+    </div>
+</div>
+
 <div id="kelly-loader">
     <div class="loader-wrapper">
         <div class="loader-ring"></div>
